@@ -46,6 +46,9 @@ public class BuildCubeJob implements Job {
             logger.info("Waiting cube {} ready.  current status : {}", cubeName, cube);
             Thread.currentThread().sleep(checkInterval);
             cube = restClient.getCube(cubeName);
+            if(getCubeStatus(cube).equals("ERROR")){
+                throw new RuntimeException("BUILD CUBE ERROR. Exit the stress test program");
+            }
         }
         logger.info("BuildCubeJob end");
         return true;

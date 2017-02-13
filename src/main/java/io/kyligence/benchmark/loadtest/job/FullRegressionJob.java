@@ -55,7 +55,7 @@ public class FullRegressionJob implements Job {
         //stress test
         if (testCase.isRunStressTest()) {
             startTime = System.currentTimeMillis();
-            Job stressTestJob = new StressTestJob(testCase);
+            Job stressTestJob = new LoadTestJob(testCase);
             jobs.add(stressTestJob);
             success = stressTestJob.run();
             logger.info("StressTestJob finish time : {}", System.currentTimeMillis() - startTime);

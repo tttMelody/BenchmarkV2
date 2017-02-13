@@ -20,7 +20,7 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * Created by xiefan on 17-1-4.
  */
-public class StressTestJob implements Job {
+public class LoadTestJob implements Job {
 
     private ExecutorService executorService = Executors.newCachedThreadPool();
 
@@ -34,7 +34,7 @@ public class StressTestJob implements Job {
 
     private final long logIntervalMs;
 
-    private static final Logger logger = LoggerFactory.getLogger(StressTestJob.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoadTestJob.class);
 
     private List<StressThreadLocalResult> results = new ArrayList<>();
 
@@ -42,17 +42,17 @@ public class StressTestJob implements Job {
 
     private float totalTps = 0;
 
-    public StressTestJob(TestCase testCase) {
+    public LoadTestJob(TestCase testCase) {
         this.testCase = testCase;
-        this.threadNum = testCase.getStressThreadNum();
-        this.projectName = testCase.getStressTestProjectName();
-        this.testingTime = testCase.getStressTestingTime();
-        this.logIntervalMs = testCase.getStressTestLogIntervalMs();
+        this.threadNum = testCase.getLoadThreadNum();
+        this.projectName = testCase.getLoadTestProjectName();
+        this.testingTime = testCase.getLoadTestingTime();
+        this.logIntervalMs = testCase.getLoadTestLogIntervalMs();
     }
 
     @Override
     public boolean run() throws Exception {
-        logger.info("Start to run StressTestJob");
+        logger.info("Start to run LoadTestJob");
         List<FutureTask<StressThreadLocalResult>> tasks = new ArrayList<>();
         final AtomicLong totalQueryCount = new AtomicLong(0);
         final AtomicLong totalQueryTime = new AtomicLong(0);
@@ -122,19 +122,19 @@ public class StressTestJob implements Job {
         for (FutureTask<StressThreadLocalResult> t : tasks) {
             StressThreadLocalResult r = t.get();
             if (r == null) {
-                throw new Exception("stress test thread can not return correct result");
+                throw new Exception("Load test thread can not return correct result");
             } else {
                 results.add(r);
             }
         }
-        logger.info("StressTestJob end");
+        logger.info("LoadTestJob end");
         scheduledExecutorService.shutdown();
         return true;
     }
 
     @Override
     public void dump() {
-        logger.info("-----------------StressTestJob dump--------------------");
+        logger.info("-----------------LoadTestJob dump--------------------");
         long totalQueryCount = 0;
         long totalDelayTime = 0;
         for (StressThreadLocalResult result : results) {

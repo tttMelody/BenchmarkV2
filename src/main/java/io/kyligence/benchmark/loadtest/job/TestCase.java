@@ -137,24 +137,24 @@ public class TestCase extends ConfigBase {
     }
 
     //StressTestJob
-    public String getStressTestProjectName(){
-        String str = getOptional("stress-test-project-name", "ssb_stress");
+    public String getLoadTestProjectName(){
+        String str = getOptional("load-test-project-name", "ssb_stress");
         return str;
     }
 
 
-    public int getStressThreadNum() {
-        String numStr = getOptional("stress-test-job.thread-num", "3");
+    public int getLoadThreadNum() {
+        String numStr = getOptional("load-test-job.thread-num", "3");
         return Integer.parseInt(numStr);
     }
 
-    public long getStressTestingTime() {
-        String numStr = getOptional("stress-test-job.testing-time", "10000");
+    public long getLoadTestingTime() {
+        String numStr = getOptional("load-test-job.testing-time", "10000");
         return Long.parseLong(numStr);
     }
 
-    public long getStressTestLogIntervalMs() {
-        String numStr = getOptional("stress-test-job.log-interval-ms", "1000");
+    public long getLoadTestLogIntervalMs() {
+        String numStr = getOptional("load-test-job.log-interval-ms", "1000");
         return Long.parseLong(numStr);
     }
 
@@ -170,7 +170,7 @@ public class TestCase extends ConfigBase {
     }
 
     public boolean isRunStressTest(){
-        String str = getOptional("is-need-stress-test","true");
+        String str = getOptional("is-need-load-test","true");
         return Boolean.parseBoolean(str);
     }
 

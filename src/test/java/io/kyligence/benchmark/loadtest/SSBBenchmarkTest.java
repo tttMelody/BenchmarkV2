@@ -24,7 +24,7 @@ import io.kyligence.benchmark.loadtest.job.BuildCubeJob;
 import io.kyligence.benchmark.loadtest.job.FullRegressionJob;
 import io.kyligence.benchmark.loadtest.job.Job;
 import io.kyligence.benchmark.loadtest.job.MultiInstanceStressTestJob;
-import io.kyligence.benchmark.loadtest.job.StressTestJob;
+import io.kyligence.benchmark.loadtest.job.LoadTestJob;
 import io.kyligence.benchmark.loadtest.job.TestCase;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,7 +47,6 @@ public class SSBBenchmarkTest {
     private static final String TEST_CASE_FILE = RESOURCE_ROOT + TestCase.DEFAULT_TEST_CASE_FILE_NAME;
 
     private static final String INSTANCE_OVERRIDE_DIR = RESOURCE_ROOT + "instance-override";
-
 
     private TestCase testCase;
 
@@ -128,7 +127,7 @@ public class SSBBenchmarkTest {
 
     @Test
     public void testStress() throws Exception {
-        StressTestJob job = new StressTestJob(testCase);
+        LoadTestJob job = new LoadTestJob(testCase);
         job.run();
         job.dump();
     }

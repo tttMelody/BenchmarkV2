@@ -29,7 +29,7 @@ public class MultiInstanceStressTestJob implements Job {
 
     private List<TestCase> testCases;
 
-    private List<StressTestJob> jobs = new ArrayList<>();
+    private List<LoadTestJob> jobs = new ArrayList<>();
 
     public MultiInstanceStressTestJob(TestCase testCase, String overrideConfigRootPath) {
         this.testCase = testCase;
@@ -46,7 +46,7 @@ public class MultiInstanceStressTestJob implements Job {
             logger.info("Use Concurrent mode to run multi instance");
             final CountDownLatch latch = new CountDownLatch(testCases.size());
             for (final TestCase t : testCases) {
-                final StressTestJob job = new StressTestJob(t);
+                final LoadTestJob job = new LoadTestJob(t);
                 jobs.add(job);
                 executorService.execute(new Runnable() {
                     @Override
@@ -64,7 +64,7 @@ public class MultiInstanceStressTestJob implements Job {
         } else {
             logger.info("Use one-by-one mode to run multi instance");
             for (final TestCase t : testCases) {
-                final StressTestJob job = new StressTestJob(t);
+                final LoadTestJob job = new LoadTestJob(t);
                 jobs.add(job);
                 job.run();
             }
