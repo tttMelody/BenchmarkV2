@@ -1,0 +1,23 @@
+{
+ 
+  "uuid": "3eaca32a-a33e-4b69-83dd-0bb8b1f8c91b",
+  "name": "ssb_benchmark",
+  "realizations": [
+    {
+      "name": "ssb_stress_test_cube",
+      "type": "CUBE",
+      "realization": "ssb_stress_test_cube"
+    }
+  ], 
+  "tables" : [
+    "SSB.CUSTOMER",
+    "SSB.DATES",
+    "SSB.LINEORDER",
+    "SSB.PART",
+    "SSB.SUPPLIER",
+    "SSB.P_LINEORDER"
+  ],
+  "models":[
+	"ssb"
+  ]
+}

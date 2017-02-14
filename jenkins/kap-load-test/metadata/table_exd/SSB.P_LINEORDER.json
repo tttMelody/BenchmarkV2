@@ -1,0 +1,148 @@
+{
+  "uuid" : "eed7dd63-ff90-41b1-ada7-d24b2aaa450f",
+  "last_modified" : 1483101840908,
+  "version" : "1.6.1",
+  "table_name" : "SSB.P_LINEORDER",
+  "last_build_job_id" : "23482078-0476-4896-b772-9a5ed49049e0",
+  "columns_stats" : [ {
+    "max_value" : "16860385",
+    "min_value" : "13244420",
+    "max_length_value" : "16860385",
+    "min_length_value" : "16860385",
+    "null_count" : 0,
+    "cardinality" : 246711
+  }, {
+    "max_value" : "7",
+    "min_value" : "1",
+    "max_length_value" : "2",
+    "min_length_value" : "2",
+    "null_count" : 0,
+    "cardinality" : 7
+  }, {
+    "max_value" : "299998",
+    "min_value" : "4",
+    "max_length_value" : "158099",
+    "min_length_value" : "8",
+    "null_count" : 0,
+    "cardinality" : 136659
+  }, {
+    "max_value" : "600000",
+    "min_value" : "3",
+    "max_length_value" : "515195",
+    "min_length_value" : "5",
+    "null_count" : 0,
+    "cardinality" : 514919
+  }, {
+    "max_value" : "20000",
+    "min_value" : "1",
+    "max_length_value" : "11236",
+    "min_length_value" : "9",
+    "null_count" : 0,
+    "cardinality" : 19945
+  }, {
+    "max_value" : "19980802",
+    "min_value" : "19920101",
+    "max_length_value" : "19921112",
+    "min_length_value" : "19921112",
+    "null_count" : 0,
+    "cardinality" : 2479
+  }, {
+    "max_value" : "5-LOW",
+    "min_value" : "1-URGENT",
+    "max_length_value" : "4-NOT SPECI",
+    "min_length_value" : "5-LOW",
+    "null_count" : 0,
+    "cardinality" : 5
+  }, {
+    "max_value" : "0",
+    "min_value" : "0",
+    "max_length_value" : "0",
+    "min_length_value" : "0",
+    "null_count" : 0,
+    "cardinality" : 1
+  }, {
+    "max_value" : "50",
+    "min_value" : "1",
+    "max_length_value" : "22",
+    "min_length_value" : "1",
+    "null_count" : 0,
+    "cardinality" : 51
+  }, {
+    "max_value" : "10469900",
+    "min_value" : "90200",
+    "max_length_value" : "10119650",
+    "min_length_value" : "99205",
+    "null_count" : 0,
+    "cardinality" : 616557
+  }, {
+    "max_value" : "50850061",
+    "min_value" : "87178",
+    "max_length_value" : "10511601",
+    "min_length_value" : "95428",
+    "null_count" : 0,
+    "cardinality" : 251694
+  }, {
+    "max_value" : "10",
+    "min_value" : "0",
+    "max_length_value" : "10",
+    "min_length_value" : "8",
+    "null_count" : 0,
+    "cardinality" : 11
+  }, {
+    "max_value" : "10409900",
+    "min_value" : "81449",
+    "max_length_value" : "10187002",
+    "min_length_value" : "98565",
+    "null_count" : 0,
+    "cardinality" : 874740
+  }, {
+    "max_value" : "125939",
+    "min_value" : "54058",
+    "max_length_value" : "101624",
+    "min_length_value" : "72610",
+    "null_count" : 0,
+    "cardinality" : 14503
+  }, {
+    "max_value" : "8",
+    "min_value" : "0",
+    "max_length_value" : "5",
+    "min_length_value" : "5",
+    "null_count" : 0,
+    "cardinality" : 9
+  }, {
+    "max_value" : "19981031",
+    "min_value" : "19920131",
+    "max_length_value" : "19930109",
+    "min_length_value" : "19930109",
+    "null_count" : 0,
+    "cardinality" : 2598
+  }, {
+    "max_value" : "TRUCK",
+    "min_value" : "AIR",
+    "max_length_value" : "REG AIR",
+    "min_length_value" : "FOB",
+    "null_count" : 0,
+    "cardinality" : 7
+  }, {
+    "max_value" : "104549500",
+    "min_value" : "0",
+    "max_length_value" : "100899500",
+    "min_length_value" : "0",
+    "null_count" : 0,
+    "cardinality" : 760950
+  } ],
+  "sample_rows" : [ [ "16860385", "16860384", "16860384", "16860384", "16860384", "16860359", "16860359", "16860359", "16860358", "16860358" ], [ "2", "7", "5", "3", "1", "5", "3", "1", "5", "3" ], [ "158099", "46580", "46580", "46580", "46580", "7661", "7661", "7661", "187174", "187174" ], [ "515195", "306102", "336191", "56866", "203504", "95711", "498959", "100623", "242102", "503697" ], [ "11236", "13963", "4176", "13963", "6678", "10131", "13999", "11237", "5303", "7269" ], [ "19921112", "19970803", "19970803", "19970803", "19970803", "19971020", "19971020", "19971020", "19931202", "19931202" ], [ "3-MEDIUM", "2-HIGH", "2-HIGH", "2-HIGH", "2-HIGH", "4-NOT SPECI", "4-NOT SPECI", "4-NOT SPECI", "2-HIGH", "2-HIGH" ], [ "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" ], [ "22", "11", "21", "2", "40", "34", "33", "31", "38", "22" ], [ "2662374", "1218899", "2577078", "364572", "5629960", "5802814", "6461169", "5033222", "3967542", "3741474" ], [ "10511601", "16270141", "16270141", "16270141", "16270141", "30342214", "30342214", "30342214", "22566549", "22566549" ], [ "8", "0", "1", "8", "0", "1", "9", "1", "7", "1" ], [ "2449384", "1218899", "2551307", "335406", "5629960", "5744785", "5879663", "4982889", "3689814", "3704059" ], [ "72610", "66485", "73630", "109371", "84449", "102402", "117475", "97417", "62645", "102040" ], [ "5", "0", "0", "1", "5", "8", "4", "5", "6", "8" ], [ "19930109", "19970910", "19971019", "19971006", "19971022", "19971203", "19980104", "19980118", "19940101", "19940206" ], [ "TRUCK", "TRUCK", "RAIL", "TRUCK", "REG AIR", "AIR", "TRUCK", "REG AIR", "TRUCK", "FOB" ], [ "21298992", "0", "2577078", "2916576", "0", "5802814", "58150521", "5033222", "27772794", "3741474" ] ],
+  "storage_location" : null,
+  "owner" : "root",
+  "last_access_time" : "0",
+  "last_modified_time" : null,
+  "partition_column" : "",
+  "total_file_size" : "0",
+  "total_rows" : "1000000",
+  "data_source_properties" : {
+    "hive_inputFormat" : "org.apache.hadoop.mapred.TextInputFormat",
+    "skip_header_line_count" : "0",
+    "hive_outputFormat" : "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat",
+    "total_file_number" : "0"
+  }
+}

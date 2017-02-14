@@ -27,6 +27,7 @@ import io.kyligence.benchmark.loadtest.job.MultiInstanceStressTestJob;
 import io.kyligence.benchmark.loadtest.job.LoadTestJob;
 import io.kyligence.benchmark.loadtest.job.TestCase;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,13 +39,14 @@ import java.util.HashMap;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+@Ignore
 public class SSBBenchmarkTest {
 
     private static final Logger logger = LoggerFactory.getLogger(SSBBenchmarkTest.class);
 
     private static String RESOURCE_ROOT = "src/test/resources/";
 
-    private static final String TEST_CASE_FILE = RESOURCE_ROOT + TestCase.DEFAULT_TEST_CASE_FILE_NAME;
+    public static final String TEST_CASE_FILE = RESOURCE_ROOT + TestCase.DEFAULT_TEST_CASE_FILE_NAME;
 
     private static final String INSTANCE_OVERRIDE_DIR = RESOURCE_ROOT + "instance-override";
 

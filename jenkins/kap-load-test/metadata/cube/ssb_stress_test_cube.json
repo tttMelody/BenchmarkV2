@@ -1,0 +1,15 @@
+{
+  "uuid" : "ff7a955e-4fd7-4b7c-88a2-4771c5490aa1",
+  "last_modified" : 1484132376979,
+  "version" : "1.6.1",
+  "name" : "ssb_stress_test_cube",
+  "owner" : "ADMIN",
+  "descriptor" : "ssb_stress_test_cube",
+  "cost" : 50,
+  "status" : "DISABLED",
+  "segments" : [ ],
+  "create_time_utc" : 1484132376975,
+  "size_kb" : 0,
+  "input_records_size" : 0,
+  "input_records_count" : 0
+}
