@@ -15,7 +15,7 @@ public class ITSSBBenchmarkTest {
         if (System.getProperty("conf.dir.path") == null) {
             throw new RuntimeException("No config dir set.");
         }
-        String configFilePath = System.getProperty("conf.dir.path");
+        String configFilePath = System.getProperty("conf.dir.path") + "/conf/testcase.properties";
         TestCase testCase = new TestCase(configFilePath);
         FullRegressionJob job = new FullRegressionJob(testCase);
         job.run();
