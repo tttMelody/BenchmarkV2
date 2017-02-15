@@ -99,7 +99,7 @@ public class SSBBenchmarkTest {
 
     //dangerous
     //@Ignore
-    //@Test
+    @Test
     public void testPurgeCube() throws Exception {
         boolean success = client.purgeCube(testCase.getCubeName());
         assertTrue(success);
