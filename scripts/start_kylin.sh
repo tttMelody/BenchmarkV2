@@ -41,14 +41,17 @@ ln -s profile_prod profile
 #config override
 cp ${CONFIG_DIR_PATH}/conf/kylin.properties.override ${KYLIN_HOME}/conf/
 
-#start kylin server
-
-${KYLIN_HOME}/bin/kylin.sh start
-
 
 #reload metadata
 ${KYLIN_HOME}/bin/metastore.sh reset
 ${KYLIN_HOME}/bin/kylin.sh org.apache.kylin.tool.StorageCleanupJob --delete true
 ${KYLIN_HOME}/bin/metastore.sh restore ${CONFIG_DIR_PATH}/metadata/
+
+#start kylin server
+
+${KYLIN_HOME}/bin/kylin.sh start
+
+
+
 
 echo "Kylin server start !"
