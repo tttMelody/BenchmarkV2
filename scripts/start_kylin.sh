@@ -48,10 +48,9 @@ ${KYLIN_HOME}/bin/kylin.sh org.apache.kylin.tool.StorageCleanupJob --delete true
 ${KYLIN_HOME}/bin/metastore.sh restore ${CONFIG_DIR_PATH}/metadata/
 
 #start kylin server
-
 ${KYLIN_HOME}/bin/kylin.sh start
 
-
-
+#sleep a while waiting kylin server start
+sleep 30s
 
 echo "Kylin server start !"
