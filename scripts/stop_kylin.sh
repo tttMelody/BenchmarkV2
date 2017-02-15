@@ -38,4 +38,4 @@ kybot_pkg_name=`ls kybot_dump/kybot*/ | grep kybot`
 echo ${kybot_pkg_name}
 cd ../
 
-python {BENCHMARK_WORKSPACE}/scripts/kybot-upload-client.py -s https://kybot.io -u ${KYBOT_ACCOUNT} -p ${KYBOT_PASSWD} -f ${KYLIN_HOME}/kybot_dump/${kybot_pkg_parent_name}/${kybot_pkg_name}
+python ${BENCHMARK_WORKSPACE}/scripts/kybot-upload-client.py -s https://kybot.io -u ${KYBOT_ACCOUNT} -p ${KYBOT_PASSWD} -f ${KYLIN_HOME}/kybot_dump/${kybot_pkg_parent_name}/${kybot_pkg_name}
