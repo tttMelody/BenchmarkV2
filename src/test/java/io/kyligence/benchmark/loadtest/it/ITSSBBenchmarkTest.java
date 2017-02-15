@@ -1,6 +1,7 @@
 package io.kyligence.benchmark.loadtest.it;
 
 import io.kyligence.benchmark.loadtest.job.FullRegressionJob;
+import io.kyligence.benchmark.loadtest.job.TestCase;
 import org.junit.Test;
 
 /**
@@ -11,6 +12,13 @@ public class ITSSBBenchmarkTest {
 
     @Test
     public void fullRegressionJobTest() throws Exception {
-        System.out.println("running integration test");
+        if (System.getProperty("conf.dir.path") == null) {
+            throw new RuntimeException("No config dir set.");
+        }
+        String configFilePath = System.getProperty("conf.dir.path");
+        TestCase testCase = new TestCase(configFilePath);
+        FullRegressionJob job = new FullRegressionJob(testCase);
+        job.run();
+        job.dump();
     }
 }
