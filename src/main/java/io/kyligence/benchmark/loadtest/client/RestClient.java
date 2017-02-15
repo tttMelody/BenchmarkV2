@@ -71,7 +71,6 @@ public class RestClient {
         init(host, port, user, pwd);
     }
 
-
     private void init(String host, int port, String userName, String password) {
         this.host = host;
         this.port = port;
@@ -155,15 +154,15 @@ public class RestClient {
         return changeCubeStatus(baseUrl + "/cubes/" + cubeName + "/disable");
     }
 
-    public boolean enableCube(String cubeName) throws Exception{
+    public boolean enableCube(String cubeName) throws Exception {
         return changeCubeStatus(baseUrl + "/cubes/" + cubeName + "/enable");
     }
 
-    public boolean purgeCube(String cubeName) throws Exception{
+    public boolean purgeCube(String cubeName) throws Exception {
         return changeCubeStatus(baseUrl + "/cubes/" + cubeName + "/purge");
     }
 
-    public HashMap getCube(String cubeName) throws Exception{
+    public HashMap getCube(String cubeName) throws Exception {
         String url = baseUrl + "/cubes/" + cubeName;
         HttpGet get = newGet(url);
         get.setURI(new URI(url));
@@ -171,7 +170,7 @@ public class RestClient {
         return dealResponse(response);
     }
 
-    private boolean changeCubeStatus(String url) throws Exception{
+    private boolean changeCubeStatus(String url) throws Exception {
         HttpPut put = newPut(url);
         HashMap<String, String> paraMap = new HashMap<String, String>();
         String jsonMsg = new ObjectMapper().writeValueAsString(paraMap);
@@ -198,15 +197,15 @@ public class RestClient {
         return r;
     }
 
-    private HashMap dealResponse(HttpResponse response) throws IOException{
-        if (response.getStatusLine().getStatusCode() != 200) {
-            throw new IOException("Invalid response " + response.getStatusLine().getStatusCode());
-        }
+    private HashMap dealResponse(HttpResponse response) throws IOException {
         String result = getContent(response);
         HashMap resultMap = new ObjectMapper().readValue(result, HashMap.class);
+        if (response.getStatusLine().getStatusCode() != 200) {
+            throw new IOException("Invalid response " + response.getStatusLine().getStatusCode() + "  Error message : " + resultMap.get("exception"));
+        }
+
         return resultMap;
     }
-
 
     private void addHttpHeaders(HttpRequestBase method) {
         method.addHeader("Accept", "application/json, text/plain, */*");
@@ -227,7 +226,7 @@ public class RestClient {
         return put;
     }
 
-    private HttpGet newGet(String url){
+    private HttpGet newGet(String url) {
         HttpGet get = new HttpGet();
         addHttpHeaders(get);
         return get;
