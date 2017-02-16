@@ -83,7 +83,6 @@
                             <arguments>
                                 <argument>${benchmark.workspace}</argument>
                                 <argument>${kylin.pkg.path}</argument>
-                                <argument>${conf.dir.path}</argument>
                             </arguments>
                         </configuration>
                     </execution>

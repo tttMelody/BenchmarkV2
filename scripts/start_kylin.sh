@@ -17,7 +17,7 @@ trap 'error ${LINENO} ${?}' ERR
 #get args
 BENCHMARK_WORKSPACE=$1
 KYLIN_PKG_PATH=$2
-CONFIG_DIR_PATH=$3
+CONFIG_DIR_PATH=workload
 
 echo "running start_kylin.sh"
 echo "BENCHMARK_WORKSPACE:${BENCHMARK_WORKSPACE}"
@@ -51,6 +51,7 @@ ${KYLIN_HOME}/bin/metastore.sh restore ${CONFIG_DIR_PATH}/metadata/
 ${KYLIN_HOME}/bin/kylin.sh start
 
 #sleep a while waiting kylin server start
+echo "sleep a while waiting kylin server start"
 sleep 30s
 
 echo "Kylin server start !"
