@@ -32,13 +32,16 @@ echo 'kylin home : ' ${KYLIN_HOME}
 
 echo "Kylin server stop !"
 
-echo "upload kybot files"
-#upload kybot zip package
-cd ${KYLIN_HOME}
-bash ./kybot/kybot.sh
-kybot_pkg_parent_name=`ls kybot_dump/ | grep kybot`
-kybot_pkg_name=`ls kybot_dump/kybot*/ | grep kybot`
-echo ${kybot_pkg_name}
-cd ../
 
-python ${KYLIN_INSTANCE_HOME}/scripts/kybot-upload-client.py -s https://kybot.io -u ${KYBOT_ACCOUNT} -p ${KYBOT_PASSWORD} -f ${KYLIN_HOME}/kybot_dump/${kybot_pkg_parent_name}/${kybot_pkg_name}
+if [ ${NEED_UPLOAD_KYBOT_FILE} = "true" ]; then
+    echo "upload kybot files"
+    #upload kybot zip package
+    cd ${KYLIN_HOME}
+    bash ./kybot/kybot.sh
+    kybot_pkg_parent_name=`ls kybot_dump/ | grep kybot`
+    kybot_pkg_name=`ls kybot_dump/kybot*/ | grep kybot`
+    echo ${kybot_pkg_name}
+    cd ../
+
+    python ${KYLIN_INSTANCE_HOME}/scripts/kybot-upload-client.py -s https://kybot.io -u ${KYBOT_ACCOUNT} -p ${KYBOT_PASSWORD} -f ${KYLIN_HOME}/kybot_dump/${kybot_pkg_parent_name}/${kybot_pkg_name}
+fi
