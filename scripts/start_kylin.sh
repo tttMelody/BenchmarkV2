@@ -22,9 +22,11 @@ PROJECT_BASE_DIR=`pwd`
 
 echo "running start_kylin.sh"
 echo "KYLIN_PACKAGE_PATH:${KYLIN_PKG_PATH}"
+echo "PROJECT_BASE_DIR:${PROJECT_BASE_DIR}"
 
 #release tar
 rm -rf ${KYLIN_INSTANCE_HOME}
+mkdir ${KYLIN_INSTANCE_HOME}
 tar -zxvf ${KYLIN_PKG_PATH} -C ${KYLIN_INSTANCE_HOME}
 
 #set kylin home
