@@ -48,8 +48,6 @@ public class SSBBenchmarkTest {
 
     public static final String TEST_CASE_FILE = RESOURCE_ROOT + TestCase.DEFAULT_TEST_CASE_FILE_NAME;
 
-    private static final String INSTANCE_OVERRIDE_DIR = RESOURCE_ROOT + "instance-override";
-
     private TestCase testCase;
 
     private RestClient client;
@@ -77,47 +75,6 @@ public class SSBBenchmarkTest {
         }
     }
 
-    //@Ignore
-    //@Test
-    public void testBuildCube() throws Exception {
-        boolean success = client.buildCube("ssb", testCase.getBuildStartTime(), testCase.getBuildEndTime(), "BUILD");
-        assertTrue(success);
-    }
-
-    @Test
-    public void testDisableCube() throws Exception {
-        boolean success = client.disableCube(testCase.getCubeName());
-        assertTrue(success);
-    }
-
-    @Test
-    public void testEnableCube() throws Exception {
-        boolean success = client.enableCube(testCase.getCubeName());
-        assertTrue(success);
-    }
-
-
-    //dangerous
-    //@Ignore
-    @Test
-    public void testPurgeCube() throws Exception {
-        boolean success = client.purgeCube(testCase.getCubeName());
-        assertTrue(success);
-    }
-
-    @Test
-    public void testGetCube() throws Exception {
-        HashMap result = client.getCube(testCase.getCubeName());
-        logger.info((String) result.get("status"));
-    }
-
-    //@Ignore
-    @Test
-    public void testBuildCubeJob() throws Exception {
-        Job job = new BuildCubeJob(testCase);
-        job.run();
-        job.dump();
-    }
 
     @Test
     public void testBasicBenchmark() throws Exception {
@@ -134,18 +91,5 @@ public class SSBBenchmarkTest {
         job.dump();
     }
 
-    @Test
-    public void fullRegressionJobTest() throws Exception {
-        FullRegressionJob job = new FullRegressionJob(testCase);
-        job.run();
-        job.dump();
-    }
-
-    @Test
-    public void multiInstanceJobTest() throws Exception {
-        MultiInstanceStressTestJob job = new MultiInstanceStressTestJob(testCase,RESOURCE_ROOT + "instance-override");
-        job.run();
-        job.dump();
-    }
 
 }
