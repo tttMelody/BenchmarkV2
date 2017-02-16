@@ -43,5 +43,5 @@ if [ ${NEED_UPLOAD_KYBOT_FILE} = "true" ]; then
     echo ${kybot_pkg_name}
     cd ../
 
-    python ${KYLIN_INSTANCE_HOME}/scripts/kybot-upload-client.py -s https://kybot.io -u ${KYBOT_ACCOUNT} -p ${KYBOT_PASSWORD} -f ${KYLIN_HOME}/kybot_dump/${kybot_pkg_parent_name}/${kybot_pkg_name}
+    python ${PROJECT_BASE_DIR}/scripts/kybot-upload-client.py -s https://kybot.io -u ${KYBOT_ACCOUNT} -p ${KYBOT_PASSWORD} -f ${KYLIN_HOME}/kybot_dump/${kybot_pkg_parent_name}/${kybot_pkg_name}
 fi
