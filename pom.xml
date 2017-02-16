@@ -81,7 +81,6 @@
                         <configuration>
                             <executable>scripts/start_kylin.sh</executable>
                             <arguments>
-                                <argument>${benchmark.workspace}</argument>
                                 <argument>${kylin.pkg.path}</argument>
                             </arguments>
                         </configuration>
@@ -95,11 +94,6 @@
                         <phase>post-integration-test</phase>
                         <configuration>
                             <executable>scripts/stop_kylin.sh</executable>
-                            <arguments>
-                                <argument>${benchmark.workspace}</argument>
-                                <argument>${kybot.account}</argument>
-                                <argument>${kybot.passwd}</argument>
-                            </arguments>
                         </configuration>
                     </execution>
                 </executions>

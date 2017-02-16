@@ -15,12 +15,15 @@ function error() {
 trap 'error ${LINENO} ${?}' ERR
 
 #get args
-BENCHMARK_WORKSPACE=$1
-KYBOT_ACCOUNT=$2
-KYBOT_PASSWD=$3
+PROJECT_BASE_DIR=`pwd`
+CONFIG_DIR_PATH=workload
+KYLIN_INSTANCE_HOME=kylin-instance-home
+
+#get kybot config
+source ${PROJECT_BASE_DIR}/${CONFIG_DIR_PATH}/conf/kybot-config.sh
 
 #set kylin home
-cd ${BENCHMARK_WORKSPACE}/kap-*/
+cd ${KYLIN_INSTANCE_HOME}/kap-*/
 export KYLIN_HOME=`pwd`
 
 # Tear down stage
@@ -38,4 +41,4 @@ kybot_pkg_name=`ls kybot_dump/kybot*/ | grep kybot`
 echo ${kybot_pkg_name}
 cd ../
 
-python ${BENCHMARK_WORKSPACE}/scripts/kybot-upload-client.py -s https://kybot.io -u ${KYBOT_ACCOUNT} -p ${KYBOT_PASSWD} -f ${KYLIN_HOME}/kybot_dump/${kybot_pkg_parent_name}/${kybot_pkg_name}
+python ${KYLIN_INSTANCE_HOME}/scripts/kybot-upload-client.py -s https://kybot.io -u ${KYBOT_ACCOUNT} -p ${KYBOT_PASSWORD} -f ${KYLIN_HOME}/kybot_dump/${kybot_pkg_parent_name}/${kybot_pkg_name}

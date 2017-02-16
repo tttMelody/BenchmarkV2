@@ -14,22 +14,21 @@ function error() {
 }
 trap 'error ${LINENO} ${?}' ERR
 
-#get args
-BENCHMARK_WORKSPACE=$1
-KYLIN_PKG_PATH=$2
+#args
+KYLIN_PKG_PATH=$1
+KYLIN_INSTANCE_HOME=kylin-instance-home
 CONFIG_DIR_PATH=workload
+PROJECT_BASE_DIR=`pwd`
 
 echo "running start_kylin.sh"
-echo "BENCHMARK_WORKSPACE:${BENCHMARK_WORKSPACE}"
 echo "KYLIN_PACKAGE_PATH:${KYLIN_PKG_PATH}"
-echo "CONFIG_DIR_PATH:${CONFIG_DIR_PATH}"
 
 #release tar
-rm -rf ${BENCHMARK_WORKSPACE}/kap-*
-tar -zxvf ${KYLIN_PKG_PATH} -C ${BENCHMARK_WORKSPACE}
+rm -rf ${KYLIN_INSTANCE_HOME}
+tar -zxvf ${KYLIN_PKG_PATH} -C ${KYLIN_INSTANCE_HOME}
 
 #set kylin home
-cd ${BENCHMARK_WORKSPACE}/kap-*/
+cd ${KYLIN_INSTANCE_HOME}/kap-*/
 export KYLIN_HOME=`pwd`
 echo 'kylin home : ' ${KYLIN_HOME}
 
@@ -39,7 +38,7 @@ rm -f profile
 ln -s profile_prod profile
 
 #config override
-cp ${CONFIG_DIR_PATH}/conf/kylin.properties.override ${KYLIN_HOME}/conf/
+cp ${PROJECT_BASE_DIR}/${CONFIG_DIR_PATH}/conf/kylin.properties.override ${KYLIN_HOME}/conf/
 
 
 #reload metadata
@@ -53,5 +52,7 @@ ${KYLIN_HOME}/bin/kylin.sh start
 #sleep a while waiting kylin server start
 echo "sleep a while waiting kylin server start"
 sleep 30s
+
+cd ${PROJECT_BASE_DIR}
 
 echo "Kylin server start !"
