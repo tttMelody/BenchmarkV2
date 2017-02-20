@@ -23,6 +23,8 @@ public class BuildCubeJob implements Job {
 
     private long checkInterval;
 
+    private static long BUILD_TIME_OUT = 3 * 3600 * 1000; //3h
+
     public BuildCubeJob(TestCase testCase) {
         this.testCase = testCase;
         this.cubeName = testCase.getCubeName();
@@ -42,12 +44,16 @@ public class BuildCubeJob implements Job {
         restClient.purgeCube(cubeName);
         restClient.buildCube(cubeName, startTime, endTime, "BUILD");
         HashMap cube = restClient.getCube(cubeName);
+        long startTime = System.currentTimeMillis();
         while (!getCubeStatus(cube).equals("READY")) {
             logger.info("Waiting cube {} ready.  current status : {}", cubeName, cube);
             Thread.currentThread().sleep(checkInterval);
             cube = restClient.getCube(cubeName);
             if(getCubeStatus(cube).equals("ERROR")){
                 throw new RuntimeException("BUILD CUBE ERROR. Exit the stress test program");
+            }
+            if(System.currentTimeMillis() - startTime > BUILD_TIME_OUT){
+                throw new RuntimeException("Build Cube timeout. Please check whether there are something wrong");
             }
         }
         logger.info("BuildCubeJob end");
