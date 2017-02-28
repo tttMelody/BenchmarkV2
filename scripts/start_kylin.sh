@@ -45,7 +45,8 @@ cp ${PROJECT_BASE_DIR}/${CONFIG_DIR_PATH}/conf/kylin.properties.override ${KYLIN
 
 #reload metadata
 ${KYLIN_HOME}/bin/metastore.sh reset
-${KYLIN_HOME}/bin/kylin.sh org.apache.kylin.tool.StorageCleanupJob --delete true
+${KYLIN_HOME}/bin/kylin.sh io.kyligence.kap.tool.storage.KapStorageCleanupCLI
+${KYLIN_HOME}/bin/kylin.sh io.kyligence.kap.tool.storage.KapStorageCleanupCLI --delete true
 ${KYLIN_HOME}/bin/metastore.sh restore ${PROJECT_BASE_DIR}/${CONFIG_DIR_PATH}/metadata/
 
 #start kylin server
