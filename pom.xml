@@ -9,11 +9,8 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <benchmark.workspace/>
         <kylin.pkg.path/>
-        <conf.dir.path/>
-        <kybot.account/>
-        <kybot.passwd/>
+        <kybot.path/>
     </properties>
 
     <build>
@@ -106,6 +103,9 @@
                                 <phase>post-integration-test</phase>
                                 <configuration>
                                     <executable>scripts/stop_kylin.sh</executable>
+                                    <arguments>
+                                        <argument>${kybot.path}</argument>
+                                    </arguments>
                                 </configuration>
                             </execution>
                         </executions>
