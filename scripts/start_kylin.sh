@@ -30,11 +30,7 @@ mkdir ${KYLIN_INSTANCE_HOME}
 tar -zxvf ${KYLIN_PKG_PATH} -C ${KYLIN_INSTANCE_HOME}
 
 #set kylin home
-cd ${KYLIN_INSTANCE_HOME}
-TMP=`ls`
-echo 'kylin pkg name is'
-cp -r ${TMP}/* ./
-rm -rf ${TMP}
+cd ${KYLIN_INSTANCE_HOME}/apache-*/
 export KYLIN_HOME=`pwd`
 echo 'kylin home : ' ${KYLIN_HOME}
 
