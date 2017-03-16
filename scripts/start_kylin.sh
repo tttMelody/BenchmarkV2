@@ -34,11 +34,6 @@ cd ${KYLIN_INSTANCE_HOME}/apache-*/
 export KYLIN_HOME=`pwd`
 echo 'kylin home : ' ${KYLIN_HOME}
 
-#prod setting
-cd ${KYLIN_HOME}/conf
-rm -f profile
-ln -s profile_prod profile
-
 #config override
 cp ${PROJECT_BASE_DIR}/${CONFIG_DIR_PATH}/conf/kylin.properties.override ${KYLIN_HOME}/conf/
 
