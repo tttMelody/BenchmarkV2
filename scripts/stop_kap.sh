@@ -23,8 +23,9 @@ KYLIN_INSTANCE_HOME=kylin-instance-home
 source ${PROJECT_BASE_DIR}/${CONFIG_DIR_PATH}/conf/kybot-config.sh
 
 #set kylin home
-cd ${KYLIN_INSTANCE_HOME}
+cd ${KYLIN_INSTANCE_HOME}/kap-*/
 export KYLIN_HOME=`pwd`
+echo 'kylin home : ' ${KYLIN_HOME}
 
 # Tear down stage
 ${KYLIN_HOME}/bin/kylin.sh stop
