@@ -156,11 +156,13 @@ public class LoadTestJob implements Job {
     }
 
     private boolean checkResponseCorrect(SqlResponse response) {
-        boolean correct = true;
-        correct &= (!response.isHitStorageCache());
-        correct &= (response.getSqlDuration() >= 0);
-        correct &= (response.getTotalScanCount() >= 0);
-        return correct;
+        if(response.isHitStorageCache())
+            return false;
+        if(response.getSqlDuration() < 0)
+            return false;
+        if(response.getTotalScanCount() < 0)
+            return false;
+        return true;
     }
 
     private boolean isTimeout(long startTime) {

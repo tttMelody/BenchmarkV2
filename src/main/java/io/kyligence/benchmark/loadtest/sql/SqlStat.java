@@ -71,7 +71,9 @@ public class SqlStat {
     public boolean isHitStorageCache() {
         boolean flag = false;
         for (SqlResponse response : responses) {
-            flag |= response.isHitStorageCache();
+            if (response.isHitStorageCache()) {
+                flag = true;
+            }
         }
         return flag;
     }

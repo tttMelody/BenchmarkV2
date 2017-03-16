@@ -29,6 +29,7 @@ public class BenchmarkTestJob implements Job {
     public boolean run() throws Exception {
         logger.info("Start to run BenchmarkTestJob");
         RestClient client = new RestClient(testCase);
+        client.disableCache();
         for (SqlRequest request : testCase.getAllSqlRequest()) {
             logger.info("execute sql file : " + request.getFileName());
             SqlStat stat = new SqlStat();
