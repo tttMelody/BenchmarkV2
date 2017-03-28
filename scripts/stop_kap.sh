@@ -28,7 +28,7 @@ export KYLIN_HOME=`pwd`
 echo 'kylin home : ' ${KYLIN_HOME}
 
 # Tear down stage
-#${KYLIN_HOME}/bin/kylin.sh stop
+${KYLIN_HOME}/bin/kylin.sh stop
 echo 'kylin home : ' ${KYLIN_HOME}
 
 echo "Kylin server stop !"
@@ -46,3 +46,6 @@ if [ ${NEED_UPLOAD_KYBOT_FILE} = "true" ]; then
 
     python ${PROJECT_BASE_DIR}/scripts/kybot-upload-client.py -s https://kybot.io -u ${KYBOT_ACCOUNT} -p ${KYBOT_PASSWORD} -f ${KYLIN_HOME}/kybot_dump/${kybot_pkg_parent_name}/${kybot_pkg_name}
 fi
+
+#restart
+${KYLIN_HOME}/bin/kylin.sh start
