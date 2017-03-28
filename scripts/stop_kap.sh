@@ -28,7 +28,7 @@ export KYLIN_HOME=`pwd`
 echo 'kylin home : ' ${KYLIN_HOME}
 
 # Tear down stage
-${KYLIN_HOME}/bin/kylin.sh stop
+#${KYLIN_HOME}/bin/kylin.sh stop
 echo 'kylin home : ' ${KYLIN_HOME}
 
 echo "Kylin server stop !"
