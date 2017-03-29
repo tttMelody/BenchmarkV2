@@ -47,5 +47,4 @@ if [ ${NEED_UPLOAD_KYBOT_FILE} = "true" ]; then
     python ${PROJECT_BASE_DIR}/scripts/kybot-upload-client.py -s https://kybot.io -u ${KYBOT_ACCOUNT} -p ${KYBOT_PASSWORD} -f ${KYLIN_HOME}/kybot_dump/${kybot_pkg_parent_name}/${kybot_pkg_name}
 fi
 
-#restart
-${KYLIN_HOME}/bin/kylin.sh start
+echo "debug"
