@@ -80,6 +80,7 @@ def login(config):
         sys.exit(1)
 
 def upload_file_multi(config):
+    s.auth = (config.username, config.password)
     statinfo = os.stat(config.file)
     chunks = (int)(statinfo.st_size / CHUNK_SIZE) + 1;
     print(chunks)
@@ -117,5 +118,5 @@ def read_chunks(filepath):
 if __name__ == "__main__":
     (config, args) = parser.parse_args()
     initHttpSession()
-    login(config)
+#    login(config)
     upload_file_multi(config)
