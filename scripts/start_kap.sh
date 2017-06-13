@@ -34,6 +34,9 @@ cd ${KYLIN_INSTANCE_HOME}/kap-*/
 export KYLIN_HOME=`pwd`
 echo 'kylin home : ' ${KYLIN_HOME}
 
+#skip license check
+rm -f ${KYLIN_HOME}/bin/check-license.sh
+
 #prod setting
 cd ${KYLIN_HOME}/conf
 rm -f profile
