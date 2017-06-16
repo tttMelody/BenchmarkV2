@@ -19,6 +19,7 @@ KYLIN_PKG_PATH=$1
 KYLIN_INSTANCE_HOME=kylin-instance-home
 CONFIG_DIR_PATH=workload
 PROJECT_BASE_DIR=`pwd`
+SETENV_PATH=/root/load-test-workloads
 
 echo "running start_kylin.sh"
 echo "KYLIN_PACKAGE_PATH:${KYLIN_PKG_PATH}"
@@ -34,9 +35,11 @@ cd ${KYLIN_INSTANCE_HOME}/apache-*/
 export KYLIN_HOME=`pwd`
 echo 'kylin home : ' ${KYLIN_HOME}
 
+#modify jvm setting
+cp -f ${SETENV_PATH}/setenv.sh ${KYLIN_HOME}/bin/
+
 #config override
 cp ${PROJECT_BASE_DIR}/${CONFIG_DIR_PATH}/conf/kylin.properties.override ${KYLIN_HOME}/conf/
-
 
 #reload metadata
 ${KYLIN_HOME}/bin/metastore.sh reset
