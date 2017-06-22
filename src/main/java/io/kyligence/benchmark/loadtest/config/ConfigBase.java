@@ -1,6 +1,5 @@
 package io.kyligence.benchmark.loadtest.config;
 
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -15,7 +14,7 @@ public abstract class ConfigBase {
 
     final protected String configFile;
 
-    public ConfigBase(String configFile) throws IOException{
+    public ConfigBase(String configFile) throws IOException {
         this.properties = new Properties();
         this.configFile = configFile;
         properties.load(new FileInputStream(new File(configFile)));
@@ -29,11 +28,11 @@ public abstract class ConfigBase {
         return value;
     }
 
-    final public String getConfigFilePath(){
+    final public String getConfigFilePath() {
         return configFile;
     }
 
-    final public void putAll(Properties properties){
+    final public void putAll(Properties properties) {
         this.properties.putAll(properties);
     }
 }

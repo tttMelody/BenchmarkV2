@@ -17,7 +17,6 @@
 */
 package io.kyligence.benchmark.loadtest;
 
-
 import io.kyligence.benchmark.loadtest.client.RestClient;
 import io.kyligence.benchmark.loadtest.job.BenchmarkTestJob;
 import io.kyligence.benchmark.loadtest.job.BuildCubeJob;
@@ -75,7 +74,6 @@ public class SSBBenchmarkTest {
         }
     }
 
-
     @Test
     public void testBasicBenchmark() throws Exception {
 
@@ -90,6 +88,5 @@ public class SSBBenchmarkTest {
         job.run();
         job.dump();
     }
-
 
 }

@@ -41,7 +41,7 @@ public class TestCase extends ConfigBase {
         if (!queries.exists()) {
             throw new IOException("Sql file or dir not exist");
         }
-        if (queries.isDirectory()) { //dir
+        if (queries.isDirectory()) { // dir
             File[] files = queries.listFiles();
             Arrays.sort(files, new Comparator<File>() {
                 public int compare(File o1, File o2) {
@@ -52,15 +52,15 @@ public class TestCase extends ConfigBase {
                 SqlRequest request = new SqlRequest(FileUtils.readFileToString(f), f.getName());
                 requests.add(request);
             }
-        } else { //one file
+        } else { // one file
             SqlRequest request = new SqlRequest(FileUtils.readFileToString(queries), queries.getName());
             requests.add(request);
         }
         logger.info("Successfull init test case");
         logger.info("Sql files Dir : {}", queries.getAbsolutePath());
         logger.info("Sql files num : {}", requests.size());
-        logger.info("BuildCubeJob info. CubeName : {}. BuildStartTime : {}. BuildEndTime : {}",
-                getCubeName(),getBuildStartTime(),getBuildEndTime());
+        logger.info("BuildCubeJob info. CubeName : {}. BuildStartTime : {}. BuildEndTime : {}", getCubeName(),
+                getBuildStartTime(), getBuildEndTime());
     }
 
     public String getCubeName() {
@@ -86,7 +86,7 @@ public class TestCase extends ConfigBase {
         return requests;
     }
 
-    //RestClient
+    // RestClient
 
     public String getHost() {
         return getOptional("restclient.kylin-server-host", "localhost");
@@ -105,43 +105,41 @@ public class TestCase extends ConfigBase {
         return getOptional("restclient.kylin-server-password", "KYLIN");
     }
 
-    public void setHost(String host){
-        properties.setProperty("restclient.kylin-server-host",host);
+    public void setHost(String host) {
+        properties.setProperty("restclient.kylin-server-host", host);
     }
 
-    public void setPort(String port){
-        properties.setProperty("restclient.kylin-server-port",port);
+    public void setPort(String port) {
+        properties.setProperty("restclient.kylin-server-port", port);
     }
 
-    //BuildCubeJob
+    // BuildCubeJob
     public long getSheckCubeStatusInterval() {
         String str = getOptional("build-cube-job.check-cube-status-interval", "60000");
         return Long.parseLong(str);
     }
 
-    //BenchmarkTestJob
-    public String getBenchmarkTestProjectName(){
+    // BenchmarkTestJob
+    public String getBenchmarkTestProjectName() {
         String str = getOptional("benchmark-project-name", "ssb_benchmark");
         return str;
     }
 
-    public int getSqlLogNum(){
-        String str = getOptional("sql-log-finish-num","10");
+    public int getSqlLogNum() {
+        String str = getOptional("sql-log-finish-num", "10");
         return Integer.parseInt(str);
     }
-
 
     public int getBenchmarkTestRepeatTime() {
         String str = getOptional("benchmark-test.repeat-time", "3");
         return Integer.parseInt(str);
     }
 
-    //StressTestJob
-    public String getLoadTestProjectName(){
+    // StressTestJob
+    public String getLoadTestProjectName() {
         String str = getOptional("load-test-project-name", "ssb_stress");
         return str;
     }
-
 
     public int getLoadThreadNum() {
         String numStr = getOptional("load-test-job.thread-num", "3");
@@ -158,33 +156,33 @@ public class TestCase extends ConfigBase {
         return Long.parseLong(numStr);
     }
 
-    //run job config
-    public boolean isNeedRebuildCube(){
-        String str = getOptional("is-need-rebuild-cube","false");
+    // run job config
+    public boolean isNeedRebuildCube() {
+        String str = getOptional("is-need-rebuild-cube", "false");
         return Boolean.parseBoolean(str);
     }
 
-    public boolean isRunBenchmarkTest(){
-        String str = getOptional("is-need-benchmark-test","true");
+    public boolean isRunBenchmarkTest() {
+        String str = getOptional("is-need-benchmark-test", "true");
         return Boolean.parseBoolean(str);
     }
 
-    public boolean isRunStressTest(){
-        String str = getOptional("is-need-load-test","true");
+    public boolean isRunStressTest() {
+        String str = getOptional("is-need-load-test", "true");
         return Boolean.parseBoolean(str);
     }
 
-    public String getHostUrl(){
+    public String getHostUrl() {
         return properties.getProperty("host-url");
     }
 
-    public String getPortUrl(){
+    public String getPortUrl() {
         return properties.getProperty("port-url");
     }
 
-    //multi instance config
-    public String getScheduleMode(){
-        return getOptional("multi-instance.schedule-mode","concurrent");
+    // multi instance config
+    public String getScheduleMode() {
+        return getOptional("multi-instance.schedule-mode", "concurrent");
     }
 
 }

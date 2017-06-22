@@ -82,10 +82,10 @@ public class MultiInstanceStressTestJob implements Job {
         assert (hosts.length == ports.length);
         for (int i = 0; i < hosts.length; i++) {
             TestCase localTestCase = new TestCase(testCase.getConfigFilePath());
-            //reset host and port
+            // reset host and port
             localTestCase.setHost(hosts[i]);
             localTestCase.setPort(ports[i]);
-            //detect override files
+            // detect override files
             File overrideFile = new File(overrideConfigRootPath + hosts[i] + "_" + ports[i] + ".override");
             if (overrideFile.exists()) {
                 logger.info("Detect override file : {}", overrideFile.getAbsolutePath());
@@ -111,7 +111,8 @@ public class MultiInstanceStressTestJob implements Job {
         logger.info("-- MultiInstanceTestJob Summary --");
         float totalTps = 0;
         for (int i = 0; i < testCases.size(); i++) {
-            logger.info("instance : {} , host : {} , port : {}", i, testCases.get(i).getHost(), testCases.get(i).getPort());
+            logger.info("instance : {} , host : {} , port : {}", i, testCases.get(i).getHost(),
+                    testCases.get(i).getPort());
             jobs.get(i).dump();
             totalTps += jobs.get(i).getTotalTps();
         }
