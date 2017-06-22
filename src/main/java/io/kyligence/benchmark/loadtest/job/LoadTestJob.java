@@ -59,7 +59,7 @@ public class LoadTestJob implements Job {
         final AtomicLong totalQueryCountOneRound = new AtomicLong(0);
 
         /*
-        start a deamon thread to monitor the state of the stress test system
+         * start a deamon thread to monitor the state of the stress test system
          */
         scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
             @Override
@@ -70,51 +70,52 @@ public class LoadTestJob implements Job {
         }, 0, logIntervalMs, TimeUnit.MILLISECONDS);
 
         /*
-            start stress test tasks
+         * start stress test tasks
          */
         for (int i = 0; i < threadNum; i++) {
             final int id = i + 1;
 
-            FutureTask<StressThreadLocalResult> task = new FutureTask<StressThreadLocalResult>(new Callable<StressThreadLocalResult>() {
-                @Override
-                public StressThreadLocalResult call() throws Exception {
-                    try {
-                        long startTime = System.currentTimeMillis();
-                        long threadLocalQueryCount = 0;
-                        long threadLocalTimeCost = 0;
-                        RestClient client = new RestClient(testCase);
-                        client.disableCache();
-                        while (true) {
-                            for (SqlRequest request : testCase.getAllSqlRequest()) {
-                                long queryStartTime = System.currentTimeMillis();
-                                SqlResponse response = client.query(request.getSql(), projectName);
-                                long queryEndTime = System.currentTimeMillis();
-                                if (!checkResponseCorrect(response)) {
-                                    throw new Exception("Response not correct");
-                                } else {
-                                    threadLocalQueryCount++;
-                                    totalQueryCount.incrementAndGet();
-                                    totalQueryCountOneRound.incrementAndGet();
-                                    threadLocalTimeCost += (queryEndTime - queryStartTime);
-                                    totalQueryTime.addAndGet(queryEndTime - queryStartTime);
+            FutureTask<StressThreadLocalResult> task = new FutureTask<StressThreadLocalResult>(
+                    new Callable<StressThreadLocalResult>() {
+                        @Override
+                        public StressThreadLocalResult call() throws Exception {
+                            try {
+                                long startTime = System.currentTimeMillis();
+                                long threadLocalQueryCount = 0;
+                                long threadLocalTimeCost = 0;
+                                RestClient client = new RestClient(testCase);
+                                client.disableCache();
+                                while (true) {
+                                    for (SqlRequest request : testCase.getAllSqlRequest()) {
+                                        long queryStartTime = System.currentTimeMillis();
+                                        SqlResponse response = client.query(request.getSql(), projectName);
+                                        long queryEndTime = System.currentTimeMillis();
+                                        if (!checkResponseCorrect(response)) {
+                                            throw new Exception("Response not correct");
+                                        } else {
+                                            threadLocalQueryCount++;
+                                            totalQueryCount.incrementAndGet();
+                                            totalQueryCountOneRound.incrementAndGet();
+                                            threadLocalTimeCost += (queryEndTime - queryStartTime);
+                                            totalQueryTime.addAndGet(queryEndTime - queryStartTime);
+                                        }
+                                        if (threadLocalQueryCount % testCase.getSqlLogNum() == 0)
+                                            logger.info("finish query : " + request.getFileName());
+                                        if (isTimeout(startTime)) {
+                                            StressThreadLocalResult result = new StressThreadLocalResult();
+                                            result.put(TestCase.THREAD_LOCAL_QUERY_COUNT_KEY, threadLocalQueryCount);
+                                            result.put(TestCase.THREEAD_LOCAL_QUERY_TIME_KEY, threadLocalTimeCost);
+                                            result.put(TestCase.THREAD_ID_KEY, id);
+                                            return result;
+                                        }
+                                    }
                                 }
-                                if(threadLocalQueryCount % testCase.getSqlLogNum() == 0)
-                                    logger.info("finish query : " + request.getFileName());
-                                if (isTimeout(startTime)) {
-                                    StressThreadLocalResult result = new StressThreadLocalResult();
-                                    result.put(TestCase.THREAD_LOCAL_QUERY_COUNT_KEY, threadLocalQueryCount);
-                                    result.put(TestCase.THREEAD_LOCAL_QUERY_TIME_KEY, threadLocalTimeCost);
-                                    result.put(TestCase.THREAD_ID_KEY, id);
-                                    return result;
-                                }
+                            } catch (Exception e) {
+                                logger.error("error", e);
+                                return null;
                             }
                         }
-                    } catch (Exception e) {
-                        logger.error("error", e);
-                        return null;
-                    }
-                }
-            });
+                    });
             tasks.add(task);
             executorService.submit(task);
         }
@@ -156,11 +157,11 @@ public class LoadTestJob implements Job {
     }
 
     private boolean checkResponseCorrect(SqlResponse response) {
-        if(response.isHitStorageCache())
+        if (response.isHitStorageCache())
             return false;
-        if(response.getSqlDuration() < 0)
+        if (response.getSqlDuration() < 0)
             return false;
-        if(response.getTotalScanCount() < 0)
+        if (response.getTotalScanCount() < 0)
             return false;
         return true;
     }

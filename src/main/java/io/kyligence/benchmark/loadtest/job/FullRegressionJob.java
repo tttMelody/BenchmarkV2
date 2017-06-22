@@ -23,7 +23,7 @@ public class FullRegressionJob implements Job {
 
     @Override
     public boolean run() throws Exception {
-        //build cube
+        // build cube
         long startTime = System.currentTimeMillis();
         boolean success = true;
         if (testCase.isNeedRebuildCube()) {
@@ -34,11 +34,11 @@ public class FullRegressionJob implements Job {
             if (!success) {
                 throw new Exception("FullRegression job dead in BuildCubeJob procedure");
             }
-            //buildCubeJob.dump();
+            // buildCubeJob.dump();
         } else {
             logger.info("Skip BuildCubeJob");
         }
-        //benchmark test
+        // benchmark test
         if (testCase.isRunBenchmarkTest()) {
             startTime = System.currentTimeMillis();
             Job benchmarkTestJob = new BenchmarkTestJob(testCase);
@@ -48,11 +48,11 @@ public class FullRegressionJob implements Job {
             if (!success) {
                 throw new Exception("FullRegression job dead in BenchmarkTestJob procedure");
             }
-            //benchmarkTestJob.dump();
+            // benchmarkTestJob.dump();
         } else {
             logger.info("Skip BenchmarkTestJob");
         }
-        //stress test
+        // stress test
         if (testCase.isRunStressTest()) {
             startTime = System.currentTimeMillis();
             Job stressTestJob = new LoadTestJob(testCase);
@@ -62,7 +62,7 @@ public class FullRegressionJob implements Job {
             if (!success) {
                 throw new Exception("FullRegression job dead in StressTestJob procedure");
             }
-            //stressTestJob.dump();
+            // stressTestJob.dump();
         } else {
             logger.info("Skip StressTestJob");
         }

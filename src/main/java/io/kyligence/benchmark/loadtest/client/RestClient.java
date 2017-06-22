@@ -99,7 +99,8 @@ public class RestClient {
             String msg = EntityUtils.toString(response.getEntity());
 
             if (response.getStatusLine().getStatusCode() != 200)
-                throw new IOException("Invalid response " + response.getStatusLine().getStatusCode() + " with cache wipe url " + url + "\n" + msg);
+                throw new IOException("Invalid response " + response.getStatusLine().getStatusCode()
+                        + " with cache wipe url " + url + "\n" + msg);
         } catch (Exception ex) {
             throw new IOException(ex);
         } finally {
@@ -117,7 +118,8 @@ public class RestClient {
             msg = map.get("config");
 
             if (response.getStatusLine().getStatusCode() != 200)
-                throw new IOException("Invalid response " + response.getStatusLine().getStatusCode() + " with cache wipe url " + url + "\n" + msg);
+                throw new IOException("Invalid response " + response.getStatusLine().getStatusCode()
+                        + " with cache wipe url " + url + "\n" + msg);
             return msg;
         } finally {
             request.releaseConnection();
@@ -144,7 +146,8 @@ public class RestClient {
         HttpResponse response = client.execute(put);
         String result = getContent(response);
         if (response.getStatusLine().getStatusCode() != 200) {
-            throw new IOException("Invalid response " + response.getStatusLine().getStatusCode() + " with build cube url " + url + "\n" + jsonMsg);
+            throw new IOException("Invalid response " + response.getStatusLine().getStatusCode()
+                    + " with build cube url " + url + "\n" + jsonMsg);
         } else {
             return true;
         }
@@ -178,7 +181,8 @@ public class RestClient {
         HttpResponse response = client.execute(put);
         String result = getContent(response);
         if (response.getStatusLine().getStatusCode() != 200) {
-            throw new IOException("Invalid response " + response.getStatusLine().getStatusCode() + " with url " + url + "\n" + jsonMsg);
+            throw new IOException("Invalid response " + response.getStatusLine().getStatusCode() + " with url " + url
+                    + "\n" + jsonMsg);
         } else {
             return true;
         }
@@ -201,15 +205,16 @@ public class RestClient {
         String result = getContent(response);
         HashMap resultMap = new ObjectMapper().readValue(result, HashMap.class);
         if (response.getStatusLine().getStatusCode() != 200) {
-            throw new IOException("Invalid response " + response.getStatusLine().getStatusCode() + "  Error message : " + resultMap.get("exception"));
+            throw new IOException("Invalid response " + response.getStatusLine().getStatusCode() + "  Error message : "
+                    + resultMap.get("exception"));
         }
 
         return resultMap;
     }
 
     private void addHttpHeaders(HttpRequestBase method) {
-        //method.addHeader("Accept", "application/json, text/plain, */*");
-    	method.addHeader("Accept", "application/vnd.apache.kylin-v2+json, text/plain, */*");
+        // method.addHeader("Accept", "application/json, text/plain, */*");
+        method.addHeader("Accept", "application/vnd.apache.kylin-v2+json, text/plain, */*");
         method.addHeader("Content-Type", "application/json");
         String basicAuth = DatatypeConverter.printBase64Binary((this.userName + ":" + this.password).getBytes());
         method.addHeader("Authorization", "Basic " + basicAuth);

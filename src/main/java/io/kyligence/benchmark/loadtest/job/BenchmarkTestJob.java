@@ -1,6 +1,5 @@
 package io.kyligence.benchmark.loadtest.job;
 
-
 import io.kyligence.benchmark.loadtest.client.RestClient;
 import io.kyligence.benchmark.loadtest.sql.SqlRequest;
 import io.kyligence.benchmark.loadtest.sql.SqlResponse;
