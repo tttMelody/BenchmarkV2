@@ -208,7 +208,8 @@ public class RestClient {
     }
 
     private void addHttpHeaders(HttpRequestBase method) {
-        method.addHeader("Accept", "application/json, text/plain, */*");
+        //method.addHeader("Accept", "application/json, text/plain, */*");
+    	method.addHeader("Accept", "application/vnd.apache.kylin-v2+json, text/plain, */*");
         method.addHeader("Content-Type", "application/json");
         String basicAuth = DatatypeConverter.printBase64Binary((this.userName + ":" + this.password).getBytes());
         method.addHeader("Authorization", "Basic " + basicAuth);

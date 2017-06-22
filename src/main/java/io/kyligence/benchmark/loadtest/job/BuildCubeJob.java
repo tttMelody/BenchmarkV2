@@ -66,7 +66,7 @@ public class BuildCubeJob implements Job {
     }
 
     private String getCubeStatus(HashMap map) {
-        return (String) map.get("status");
+        return (String) ((HashMap)map.get("data")).get("status");
     }
 
 }
