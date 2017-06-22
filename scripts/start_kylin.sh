@@ -36,7 +36,7 @@ export KYLIN_HOME=`pwd`
 echo 'kylin home : ' ${KYLIN_HOME}
 
 #modify jvm setting
-cp -f ${SETENV_PATH}/setenv.sh ${KYLIN_HOME}/bin/
+cp -f ${SETENV_PATH}/setenv.sh ${KYLIN_HOME}/conf/
 
 #config override
 cp ${PROJECT_BASE_DIR}/${CONFIG_DIR_PATH}/conf/kylin.properties.override ${KYLIN_HOME}/conf/
