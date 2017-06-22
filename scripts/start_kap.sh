@@ -39,7 +39,7 @@ echo 'kylin home : ' ${KYLIN_HOME}
 rm -f ${KYLIN_HOME}/bin/check-license.sh
 
 #modify jvm setting
-cp -f ${SETENV_PATH}/setenv.sh ${KYLIN_HOME}/bin/
+cp -f ${SETENV_PATH}/setenv.sh ${KYLIN_HOME}/conf/
 
 #prod setting
 cd ${KYLIN_HOME}/conf
