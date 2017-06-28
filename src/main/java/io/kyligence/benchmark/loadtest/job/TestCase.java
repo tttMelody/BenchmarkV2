@@ -23,7 +23,7 @@ public class TestCase extends ConfigBase {
 
     public static final String THREAD_LOCAL_QUERY_COUNT_KEY = "THREAD_LOCAL_QUERY_COUNT_KEY";
 
-    public static final String THREEAD_LOCAL_QUERY_TIME_KEY = "THREEAD_LOCAL_QUERY_TIME_KEY";
+    public static final String THREAD_LOCAL_QUERY_TIME_KEY = "THREAD_LOCAL_QUERY_TIME_KEY";
 
     public static final String THREAD_ID_KEY = "THREAD_ID_KEY";
 
@@ -49,11 +49,11 @@ public class TestCase extends ConfigBase {
                 }
             });
             for (File f : files) {
-                SqlRequest request = new SqlRequest(FileUtils.readFileToString(f), f.getName());
+				SqlRequest request = new SqlRequest(FileUtils.readFileToString(f), f.getName());
                 requests.add(request);
             }
         } else { // one file
-            SqlRequest request = new SqlRequest(FileUtils.readFileToString(queries), queries.getName());
+			SqlRequest request = new SqlRequest(FileUtils.readFileToString(queries), queries.getName());
             requests.add(request);
         }
         logger.info("Successfull init test case");
@@ -162,14 +162,19 @@ public class TestCase extends ConfigBase {
         return Boolean.parseBoolean(str);
     }
 
-    public boolean isRunBenchmarkTest() {
+    public boolean isNeedBenchmarkTest() {
         String str = getOptional("is-need-benchmark-test", "true");
         return Boolean.parseBoolean(str);
     }
 
-    public boolean isRunStressTest() {
+    public boolean isNeedStressTest() {
         String str = getOptional("is-need-load-test", "true");
         return Boolean.parseBoolean(str);
+    }
+    
+    public boolean isNeedJdbcTest() {
+    	String str = getOptional("is-need-jdbc-test", "false");
+    	return Boolean.parseBoolean(str);
     }
 
     public String getHostUrl() {
