@@ -49,11 +49,11 @@ public class TestCase extends ConfigBase {
                 }
             });
             for (File f : files) {
-				SqlRequest request = new SqlRequest(FileUtils.readFileToString(f), f.getName());
+                SqlRequest request = new SqlRequest(FileUtils.readFileToString(f), f.getName());
                 requests.add(request);
             }
         } else { // one file
-			SqlRequest request = new SqlRequest(FileUtils.readFileToString(queries), queries.getName());
+            SqlRequest request = new SqlRequest(FileUtils.readFileToString(queries), queries.getName());
             requests.add(request);
         }
         logger.info("Successfull init test case");
@@ -171,10 +171,10 @@ public class TestCase extends ConfigBase {
         String str = getOptional("is-need-load-test", "true");
         return Boolean.parseBoolean(str);
     }
-    
+
     public boolean isNeedJdbcTest() {
-    	String str = getOptional("is-need-jdbc-test", "false");
-    	return Boolean.parseBoolean(str);
+        String str = getOptional("is-need-jdbc-test", "false");
+        return Boolean.parseBoolean(str);
     }
 
     public String getHostUrl() {
