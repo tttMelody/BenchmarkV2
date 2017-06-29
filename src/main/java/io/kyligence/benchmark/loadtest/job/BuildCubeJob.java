@@ -43,11 +43,12 @@ public class BuildCubeJob implements Job {
             restClient.disableCube(cubeName);
         restClient.purgeCube(cubeName);
         restClient.buildCube(cubeName, startTime, endTime, "BUILD");
-        HashMap cube = restClient.getCube(cubeName);
+        HashMap<?, ?> cube = restClient.getCube(cubeName);
         long startTime = System.currentTimeMillis();
         while (!getCubeStatus(cube).equals("READY")) {
             logger.info("Waiting cube {} ready.  current status : {}", cubeName, cube);
-            Thread.currentThread().sleep(checkInterval);
+            Thread.currentThread();
+            Thread.sleep(checkInterval);
             cube = restClient.getCube(cubeName);
             if (getCubeStatus(cube).equals("ERROR")) {
                 throw new RuntimeException("BUILD CUBE ERROR. Exit the stress test program");
@@ -65,8 +66,8 @@ public class BuildCubeJob implements Job {
         logger.info("-----------------BuildCubeJob dump--------------------");
     }
 
-    private String getCubeStatus(HashMap map) {
-        return (String) ((HashMap) map.get("data")).get("status");
+    private String getCubeStatus(HashMap<?, ?> map) {
+        return (String) ((HashMap<?, ?>) map.get("data")).get("status");
     }
 
 }

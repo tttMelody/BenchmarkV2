@@ -19,10 +19,7 @@ package io.kyligence.benchmark.loadtest;
 
 import io.kyligence.benchmark.loadtest.client.RestClient;
 import io.kyligence.benchmark.loadtest.job.BenchmarkTestJob;
-import io.kyligence.benchmark.loadtest.job.BuildCubeJob;
-import io.kyligence.benchmark.loadtest.job.FullRegressionJob;
 import io.kyligence.benchmark.loadtest.job.Job;
-import io.kyligence.benchmark.loadtest.job.MultiInstanceStressTestJob;
 import io.kyligence.benchmark.loadtest.job.LoadTestJob;
 import io.kyligence.benchmark.loadtest.job.TestCase;
 import org.junit.Before;
@@ -33,10 +30,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 @Ignore
 public class SSBBenchmarkTest {

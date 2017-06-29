@@ -14,7 +14,12 @@ public class ITSSBBenchmarkTest {
         String configFilePath = "workload/conf/testcase.properties";
         TestCase testCase = new TestCase(configFilePath);
         FullRegressionJob job = new FullRegressionJob(testCase);
-        job.run();
+        try {
+            job.run();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
         job.dump();
     }
 }

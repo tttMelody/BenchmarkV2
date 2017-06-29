@@ -55,7 +55,6 @@ public class SqlStat {
     }
 
     public void dump() {
-        int testTimes = responses.size();
         logger.info("---------------------------------------------");
         logger.info("sql file name : " + sqlRequest.getFileName());
         logger.info("is storageCacheUsed : " + isHitStorageCache());
