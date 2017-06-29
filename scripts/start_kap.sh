@@ -41,6 +41,9 @@ rm -f ${KYLIN_HOME}/bin/check-license.sh
 #modify jvm setting
 cp -f ${SETENV_PATH}/setenv.sh ${KYLIN_HOME}/conf/
 
+#get jdbc driver
+cp -f ${KYLIN_HOME}/lib/kylin-jdbc-* ${KYLIN_HOME}/kylin-jdbc.jar
+
 #prod setting
 cd ${KYLIN_HOME}/conf
 rm -f profile

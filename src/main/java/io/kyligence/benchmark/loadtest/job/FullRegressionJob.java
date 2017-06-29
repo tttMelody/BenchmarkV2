@@ -39,7 +39,7 @@ public class FullRegressionJob implements Job {
             logger.info("Skip BuildCubeJob");
         }
         // benchmark test
-        if (testCase.isRunBenchmarkTest()) {
+        if (testCase.isNeedBenchmarkTest()) {
             startTime = System.currentTimeMillis();
             Job benchmarkTestJob = new BenchmarkTestJob(testCase);
             jobs.add(benchmarkTestJob);
@@ -53,7 +53,7 @@ public class FullRegressionJob implements Job {
             logger.info("Skip BenchmarkTestJob");
         }
         // stress test
-        if (testCase.isRunStressTest()) {
+        if (testCase.isNeedStressTest()) {
             startTime = System.currentTimeMillis();
             Job stressTestJob = new LoadTestJob(testCase);
             jobs.add(stressTestJob);
@@ -65,6 +65,19 @@ public class FullRegressionJob implements Job {
             // stressTestJob.dump();
         } else {
             logger.info("Skip StressTestJob");
+        }
+        // jdbc test
+        if (testCase.isNeedJdbcTest()) {
+            startTime = System.currentTimeMillis();
+            Job jdbcTestJob = new JdbcTestJob(testCase);
+            jobs.add(jdbcTestJob);
+            success = jdbcTestJob.run();
+            logger.info("JDBCTestJob finish time : {}", System.currentTimeMillis() - startTime);
+            if (!success) {
+                throw new Exception("FullRegression job dead in StressTestJob procedure");
+            }
+        } else {
+            logger.info("Skip JdbcTestJob");
         }
         return true;
     }

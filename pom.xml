@@ -233,6 +233,16 @@
             <artifactId>slf4j-api</artifactId>
             <version>1.7.21</version>
         </dependency>
+        
+        <!-- JdbcDriver -->
+        <dependency>
+            <groupId>kylin.jdbc.driver</groupId>
+            <artifactId>jdbc</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${KYLIN_HOME}/kylin-jdbc.jar</systemPath>
+        </dependency>
+        
     </dependencies>
 
 </project>

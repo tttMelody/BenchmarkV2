@@ -144,7 +144,6 @@ public class RestClient {
         String jsonMsg = new ObjectMapper().writeValueAsString(paraMap);
         put.setEntity(new StringEntity(jsonMsg, "UTF-8"));
         HttpResponse response = client.execute(put);
-        String result = getContent(response);
         if (response.getStatusLine().getStatusCode() != 200) {
             throw new IOException("Invalid response " + response.getStatusLine().getStatusCode()
                     + " with build cube url " + url + "\n" + jsonMsg);
@@ -179,7 +178,6 @@ public class RestClient {
         String jsonMsg = new ObjectMapper().writeValueAsString(paraMap);
         put.setEntity(new StringEntity(jsonMsg, "UTF-8"));
         HttpResponse response = client.execute(put);
-        String result = getContent(response);
         if (response.getStatusLine().getStatusCode() != 200) {
             throw new IOException("Invalid response " + response.getStatusLine().getStatusCode() + " with url " + url
                     + "\n" + jsonMsg);

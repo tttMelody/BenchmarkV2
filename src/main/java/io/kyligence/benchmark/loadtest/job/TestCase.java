@@ -23,7 +23,7 @@ public class TestCase extends ConfigBase {
 
     public static final String THREAD_LOCAL_QUERY_COUNT_KEY = "THREAD_LOCAL_QUERY_COUNT_KEY";
 
-    public static final String THREEAD_LOCAL_QUERY_TIME_KEY = "THREEAD_LOCAL_QUERY_TIME_KEY";
+    public static final String THREAD_LOCAL_QUERY_TIME_KEY = "THREAD_LOCAL_QUERY_TIME_KEY";
 
     public static final String THREAD_ID_KEY = "THREAD_ID_KEY";
 
@@ -162,13 +162,18 @@ public class TestCase extends ConfigBase {
         return Boolean.parseBoolean(str);
     }
 
-    public boolean isRunBenchmarkTest() {
+    public boolean isNeedBenchmarkTest() {
         String str = getOptional("is-need-benchmark-test", "true");
         return Boolean.parseBoolean(str);
     }
 
-    public boolean isRunStressTest() {
+    public boolean isNeedStressTest() {
         String str = getOptional("is-need-load-test", "true");
+        return Boolean.parseBoolean(str);
+    }
+
+    public boolean isNeedJdbcTest() {
+        String str = getOptional("is-need-jdbc-test", "false");
         return Boolean.parseBoolean(str);
     }
 
