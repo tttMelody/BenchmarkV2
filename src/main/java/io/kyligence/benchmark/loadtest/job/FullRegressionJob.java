@@ -67,6 +67,8 @@ public class FullRegressionJob implements Job {
             logger.info("Skip StressTestJob");
         }
         // jdbc test
+        // sleep for one minute to wait for the completion of the previous step. 
+        Thread.sleep(60000);
         if (testCase.isNeedJdbcTest()) {
             startTime = System.currentTimeMillis();
             Job jdbcTestJob = new JdbcTestJob(testCase);
