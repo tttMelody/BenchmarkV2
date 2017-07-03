@@ -53,7 +53,7 @@ public class JdbcClient {
         Properties info = new Properties();
         info.put("user", this.userName);
         info.put("password", this.password);
-        this.conn = driver.connect("jdbc:kylin://master:7070/" + this.projectName, info);
+        this.conn = driver.connect("jdbc:kylin://" + host + ":" + port + "/" + projectName , info);
 
     }
 
