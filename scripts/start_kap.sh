@@ -26,13 +26,13 @@ echo "KYLIN_PACKAGE_PATH:${KYLIN_PKG_PATH}"
 echo "PROJECT_BASE_DIR:${PROJECT_BASE_DIR}"
 
 #release tar
-rm -rf ${KYLIN_INSTANCE_HOME}
-mkdir ${KYLIN_INSTANCE_HOME}
-tar -zxvf ${KYLIN_PKG_PATH} -C ${KYLIN_INSTANCE_HOME}
+#rm -rf ${KYLIN_INSTANCE_HOME}
+#mkdir ${KYLIN_INSTANCE_HOME}
+#tar -zxvf ${KYLIN_PKG_PATH} -C ${KYLIN_INSTANCE_HOME}
 
 #set kylin home
 cd ${KYLIN_INSTANCE_HOME}/kap-*/
-export KYLIN_HOME=`pwd`
+#export KYLIN_HOME=`pwd`
 echo 'kylin home : ' ${KYLIN_HOME}
 
 #skip license check
@@ -42,7 +42,7 @@ rm -f ${KYLIN_HOME}/bin/check-license.sh
 cp -f ${SETENV_PATH}/setenv.sh ${KYLIN_HOME}/conf/
 
 #get jdbc driver
-cp -f ${KYLIN_HOME}/lib/kylin-jdbc-* ${KYLIN_HOME}/kylin-jdbc.jar
+#cp -f ${KYLIN_HOME}/lib/kylin-jdbc-* ${KYLIN_HOME}/kylin-jdbc.jar
 
 #prod setting
 cd ${KYLIN_HOME}/conf

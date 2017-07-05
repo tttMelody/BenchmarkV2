@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.kyligence.benchmark.loadtest.job.TestCase;
 import io.kyligence.benchmark.loadtest.sql.SqlResponse;
 import io.kyligence.benchmark.loadtest.util.JsonUtil;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -61,24 +62,28 @@ public class RestClient {
 
     protected DefaultHttpClient client;
 
-    private int ONE_HOUR_IN_MS = 60 * 60 * 1000;
+    private final int ONE_HOUR_IN_MS = 60 * 60 * 1000;
 
     public RestClient(TestCase testCase) {
-        String user = testCase.getUserName();
-        String pwd = testCase.getPassword();
+
         String host = testCase.getHost();
         int port = testCase.getPort();
-        init(host, port, user, pwd);
+        String userName = testCase.getUserName();
+        String passwork = testCase.getPassword();
+
+        init(host, port, userName, passwork);
+
     }
 
     private void init(String host, int port, String userName, String password) {
+
         this.host = host;
         this.port = port;
         this.userName = userName;
         this.password = password;
         this.baseUrl = "http://" + host + ":" + port + "/kylin/api";
 
-        client = new DefaultHttpClient();
+        this.client = new DefaultHttpClient();
 
         if (userName != null && password != null) {
             CredentialsProvider provider = new BasicCredentialsProvider();
@@ -86,44 +91,96 @@ public class RestClient {
             provider.setCredentials(AuthScope.ANY, credentials);
             client.setCredentialsProvider(provider);
         }
+
         client.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, ONE_HOUR_IN_MS);
         client.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, ONE_HOUR_IN_MS);
+
+    }
+
+    private boolean setCache(boolean setValue) throws IOException {
+
+        String url = baseUrl + "/admin/config";
+
+        HttpPut put = newPut(url);
+
+        HashMap<String, String> parameterMap = new HashMap<String, String>();
+        parameterMap.put("key", "kylin.query.cache-enabled");
+        parameterMap.put("value", setValue + "");
+        put.setEntity(new StringEntity(new ObjectMapper().writeValueAsString(parameterMap), "UTF-8"));
+
+        boolean setSuccessfully;
+
+        try {
+
+            HttpResponse response = client.execute(put);
+
+            if (response.getStatusLine().getStatusCode() != 200) {
+                setSuccessfully = false;
+            } else {
+                setSuccessfully = true;
+            }
+
+            EntityUtils.consume(response.getEntity());
+            return setSuccessfully;
+
+        } finally {
+            put.releaseConnection();
+        }
+
     }
 
     public void wipeCache(String entity, String event, String cacheKey) throws IOException {
+
         String url = baseUrl + "/cache/" + entity + "/" + cacheKey + "/" + event;
-        HttpPut request = new HttpPut(url);
+
+        HttpPut put = new HttpPut(url);
 
         try {
-            HttpResponse response = client.execute(request);
-            String msg = EntityUtils.toString(response.getEntity());
 
-            if (response.getStatusLine().getStatusCode() != 200)
+            HttpResponse response = client.execute(put);
+
+            String msg = EntityUtils.toString(response.getEntity());
+            if (response.getStatusLine().getStatusCode() != 200) {
                 throw new IOException("Invalid response " + response.getStatusLine().getStatusCode()
                         + " with cache wipe url " + url + "\n" + msg);
+            }
+
+            EntityUtils.consume(response.getEntity());
+
         } catch (Exception ex) {
             throw new IOException(ex);
         } finally {
-            request.releaseConnection();
+            put.releaseConnection();
         }
+
     }
 
     public String getKylinProperties() throws IOException {
+
         String url = baseUrl + "/admin/config";
-        HttpGet request = new HttpGet(url);
+
+        HttpGet get = new HttpGet(url);
+
         try {
-            HttpResponse response = client.execute(request);
+
+            HttpResponse response = client.execute(get);
+
             String msg = EntityUtils.toString(response.getEntity());
             Map<String, String> map = JsonUtil.readValueAsMap(msg);
             msg = map.get("config");
 
-            if (response.getStatusLine().getStatusCode() != 200)
+            if (response.getStatusLine().getStatusCode() != 200) {
                 throw new IOException("Invalid response " + response.getStatusLine().getStatusCode()
                         + " with cache wipe url " + url + "\n" + msg);
+            }
+
+            EntityUtils.consume(response.getEntity());
             return msg;
+
         } finally {
-            request.releaseConnection();
+            get.releaseConnection();
         }
+
     }
 
     public boolean enableCache() throws IOException {
@@ -135,21 +192,33 @@ public class RestClient {
     }
 
     public boolean buildCube(String cubeName, long startTime, long endTime, String buildType) throws Exception {
+
         String url = baseUrl + "/cubes/" + cubeName + "/build";
+
         HttpPut put = newPut(url);
-        HashMap<String, String> paraMap = new HashMap<String, String>();
-        paraMap.put("startTime", startTime + "");
-        paraMap.put("endTime", endTime + "");
-        paraMap.put("buildType", buildType);
-        String jsonMsg = new ObjectMapper().writeValueAsString(paraMap);
+
+        HashMap<String, String> parameterMap = new HashMap<String, String>();
+        parameterMap.put("startTime", startTime + "");
+        parameterMap.put("endTime", endTime + "");
+        parameterMap.put("buildType", buildType);
+        String jsonMsg = new ObjectMapper().writeValueAsString(parameterMap);
         put.setEntity(new StringEntity(jsonMsg, "UTF-8"));
-        HttpResponse response = client.execute(put);
-        if (response.getStatusLine().getStatusCode() != 200) {
-            throw new IOException("Invalid response " + response.getStatusLine().getStatusCode()
-                    + " with build cube url " + url + "\n" + jsonMsg);
-        } else {
+
+        try {
+
+            HttpResponse response = client.execute(put);
+            if (response.getStatusLine().getStatusCode() != 200) {
+                throw new IOException("Invalid response " + response.getStatusLine().getStatusCode()
+                        + " with build cube url " + url + "\n" + jsonMsg);
+            }
+
+            EntityUtils.consume(response.getEntity());
             return true;
+
+        } finally {
+            put.releaseConnection();
         }
+
     }
 
     public boolean disableCube(String cubeName) throws Exception {
@@ -164,58 +233,94 @@ public class RestClient {
         return changeCubeStatus(baseUrl + "/cubes/" + cubeName + "/purge");
     }
 
-    public HashMap getCube(String cubeName) throws Exception {
+    public HashMap<?, ?> getCube(String cubeName) throws Exception {
+
         String url = baseUrl + "/cubes/" + cubeName;
+
         HttpGet get = newGet(url);
+
         get.setURI(new URI(url));
-        HttpResponse response = client.execute(get);
-        return dealResponse(response);
+
+        try {
+            HttpResponse response = client.execute(get);
+            return dealResponse(response);
+        } finally {
+            get.releaseConnection();
+        }
+
     }
 
     private boolean changeCubeStatus(String url) throws Exception {
+
         HttpPut put = newPut(url);
-        HashMap<String, String> paraMap = new HashMap<String, String>();
-        String jsonMsg = new ObjectMapper().writeValueAsString(paraMap);
+
+        HashMap<String, String> parameterMap = new HashMap<String, String>();
+        String jsonMsg = new ObjectMapper().writeValueAsString(parameterMap);
         put.setEntity(new StringEntity(jsonMsg, "UTF-8"));
-        HttpResponse response = client.execute(put);
-        if (response.getStatusLine().getStatusCode() != 200) {
-            throw new IOException("Invalid response " + response.getStatusLine().getStatusCode() + " with url " + url
-                    + "\n" + jsonMsg);
-        } else {
-            return true;
+
+        try {
+
+            HttpResponse response = client.execute(put);
+
+            if (response.getStatusLine().getStatusCode() != 200) {
+                throw new IOException("Invalid response " + response.getStatusLine().getStatusCode() + " with url "
+                        + url + "\n" + jsonMsg);
+            } else {
+                EntityUtils.consume(response.getEntity());
+                return true;
+            }
+        } finally {
+            put.releaseConnection();
         }
+
     }
 
     public SqlResponse query(String sql, String project) throws IOException {
+
         String url = baseUrl + "/query";
+
         HttpPost post = newPost(url);
-        HashMap<String, String> paraMap = new HashMap<String, String>();
-        paraMap.put("sql", sql);
-        paraMap.put("project", project);
-        String jsonMsg = new ObjectMapper().writeValueAsString(paraMap);
+
+        HashMap<String, String> parameterMap = new HashMap<String, String>();
+        parameterMap.put("sql", sql);
+        parameterMap.put("project", project);
+        String jsonMsg = new ObjectMapper().writeValueAsString(parameterMap);
         post.setEntity(new StringEntity(jsonMsg, "UTF-8"));
-        HttpResponse response = client.execute(post);
-        SqlResponse r = new SqlResponse(dealResponse(response));
-        return r;
+
+        try {
+
+            HttpResponse response = client.execute(post);
+            SqlResponse r = new SqlResponse(dealResponse(response));
+            EntityUtils.consume(response.getEntity());
+            return r;
+
+        } finally {
+            post.releaseConnection();
+        }
     }
 
-    private HashMap dealResponse(HttpResponse response) throws IOException {
+    private HashMap<?, ?> dealResponse(HttpResponse response) throws IOException {
+
         String result = getContent(response);
-        HashMap resultMap = new ObjectMapper().readValue(result, HashMap.class);
+        HashMap<?, ?> resultMap = new ObjectMapper().readValue(result, HashMap.class);
         if (response.getStatusLine().getStatusCode() != 200) {
             throw new IOException("Invalid response " + response.getStatusLine().getStatusCode() + "  Error message : "
                     + resultMap.get("exception"));
         }
+        EntityUtils.consume(response.getEntity());
 
         return resultMap;
+
     }
 
     private void addHttpHeaders(HttpRequestBase method) {
+
         // method.addHeader("Accept", "application/json, text/plain, */*");
         method.addHeader("Accept", "application/vnd.apache.kylin-v2+json, text/plain, */*");
         method.addHeader("Content-Type", "application/json");
         String basicAuth = DatatypeConverter.printBase64Binary((this.userName + ":" + this.password).getBytes());
         method.addHeader("Authorization", "Basic " + basicAuth);
+
     }
 
     private HttpPost newPost(String url) {
@@ -234,22 +339,6 @@ public class RestClient {
         HttpGet get = new HttpGet();
         addHttpHeaders(get);
         return get;
-    }
-
-    private boolean setCache(boolean flag) throws IOException {
-        String url = baseUrl + "/admin/config";
-        HttpPut put = newPut(url);
-        HashMap<String, String> paraMap = new HashMap<String, String>();
-        paraMap.put("key", "kylin.query.cache-enabled");
-        paraMap.put("value", flag + "");
-        put.setEntity(new StringEntity(new ObjectMapper().writeValueAsString(paraMap), "UTF-8"));
-        HttpResponse response = client.execute(put);
-        EntityUtils.consume(response.getEntity());
-        if (response.getStatusLine().getStatusCode() != 200) {
-            return false;
-        } else {
-            return true;
-        }
     }
 
     private String getContent(HttpResponse response) throws IOException {

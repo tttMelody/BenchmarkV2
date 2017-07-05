@@ -30,8 +30,8 @@ public class SqlResponse {
 
     private boolean isHitStorageCache;
 
-    public SqlResponse(HashMap rawResponse) {
-        HashMap dataMap = (HashMap) rawResponse.get("data");
+    public SqlResponse(HashMap<?, ?> rawResponse) {
+        HashMap<?, ?> dataMap = (HashMap<?, ?>) rawResponse.get("data");
         this.sqlDuration = (Integer) dataMap.get("duration");
         this.totalScanCount = (Integer) dataMap.get("totalScanCount");
         this.isHitStorageCache = (Boolean) dataMap.get("storageCacheUsed");

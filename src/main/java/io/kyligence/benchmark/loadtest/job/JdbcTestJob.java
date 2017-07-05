@@ -32,7 +32,7 @@ public class JdbcTestJob implements Job {
 
     private final long logIntervalMs;
 
-    private static final Logger logger = LoggerFactory.getLogger(LoadTestJob.class);
+    private static final Logger logger = LoggerFactory.getLogger(JdbcTestJob.class);
 
     private List<StressThreadLocalResult> results = new ArrayList<>();
 

@@ -49,10 +49,12 @@ public class TestCase extends ConfigBase {
                 }
             });
             for (File f : files) {
+                @SuppressWarnings("deprecation")
                 SqlRequest request = new SqlRequest(FileUtils.readFileToString(f), f.getName());
                 requests.add(request);
             }
         } else { // one file
+            @SuppressWarnings("deprecation")
             SqlRequest request = new SqlRequest(FileUtils.readFileToString(queries), queries.getName());
             requests.add(request);
         }
