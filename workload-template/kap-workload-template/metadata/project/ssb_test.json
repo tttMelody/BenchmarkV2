@@ -1,7 +1,7 @@
 {
  
   "uuid": "4eaca32a-a33e-4b69-83dd-0bb8b1f8c91b",
-  "name": "ssb_stress",
+  "name": "ssb_test",
   "realizations": [
     {
       "name": "ssb_stress_test_cube",
@@ -18,6 +18,6 @@
     "SSB.P_LINEORDER"
   ],
   "models":[
-	"ssb"
+    "ssb"
   ]
 }
