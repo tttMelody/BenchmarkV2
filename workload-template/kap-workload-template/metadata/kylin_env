@@ -1,8 +1,0 @@
-kylin.home: /usr/local/kap-plus-1.6.1-SNAPSHOT-cdh5.7
-kylin.version:1.6.1
-commit:2e0014e550b10b9e439683992c97ceccc190bf9e@KAP;ee32cb13bc0a72f4f3ed26be8cdf886f9441d0ce@ApacheKylin;Build with MANUAL at 2017-01-10 16:14:33;
-os.name:Linux
-os.arch:amd64
-os.version:2.6.32-431.11.20.el6.ucloud.x86_64
-java.version:1.7.0_67
-java.vendor:Oracle Corporation
