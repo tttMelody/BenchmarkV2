@@ -6,7 +6,7 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Map;
 
-public class Main {
+public class StoredAsSQLFile {
     public static void main(String[] args) throws Exception {
         String whereClause1 = Sqls.MSISDN_WhereClause;
         String whereClause2 = Sqls.IMSI_WhereClause;
