@@ -16,6 +16,7 @@ public class Benchmark {
     public static void main(String[] args) throws Exception {
         final String whereClause = Sqls.MSISDN_WhereClause;
         //final String whereClause = Sqls.IMSI_WhereClause;
+        //final String whereClause = Sqls.EVENT_BEGIN_DATE_WhereClause
 
         Map<String, String[]> SQLWithAllCol = Sqls.getDataRangeSQL(Sqls.selectAllColClause, whereClause);
         Map<String, String[]> SQLWithOneCol = Sqls.getDataRangeSQL(Sqls.selectOneColClause, whereClause);
