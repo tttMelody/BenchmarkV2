@@ -9,36 +9,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.FutureTask;
-import java.util.concurrent.atomic.AtomicLong;
 
 public class Benchmark {
     private static final Logger logger = LoggerFactory.getLogger(Benchmark.class);
 
     public static void main(String[] args) throws Exception {
-                final String whereClause = Sqls.MSISDN_WhereClause;
-//        final String whereClause = Sqls.IMSI_WhereClause;
-        //        final String whereClause = Sqls.EVENT_BEGIN_DATE_WhereClause;
+        final String whereClause = Sqls.MSISDN_WhereClause;
+        //final String whereClause = Sqls.IMSI_WhereClause;
 
-        Map<String, String[]> SQLWithAllCol = Sqls.getSQL(Sqls.selectAllColClause, whereClause);
-        Map<String, String[]> SQLWithOneCol = Sqls.getSQL(Sqls.selectOneColClause, whereClause);
-        Map<String, String[]> SQLWithTenCol = Sqls.getSQL(Sqls.selectTenColClause, whereClause);
-        Map<String, String[]> SQLWithTwentyCol = Sqls.getSQL(Sqls.selectTwentyColClause, whereClause);
-        warmUP(SQLWithAllCol, Config.project);
-        testQueryLatency(SQLWithAllCol, "", Config.project, 1);
-        testQueryLatency(SQLWithOneCol, "", Config.project, 1);
-        testQueryLatency(SQLWithTenCol, "", Config.project, 1);
-        testQueryLatency(SQLWithTwentyCol, "", Config.project, 1);
-
-        //        testQueryLatency(SQLWithAllCol, Sqls.LIMIT_10000, Config.project, 1);
-        //        testQueryLatency(SQLWithOneCol, Sqls.LIMIT_10000, Config.project, 1);
-        //        testQueryLatency(SQLWithTenCol, Sqls.LIMIT_10000, Config.project, 1);
-        //        testQueryLatency(SQLWithTwentyCol, Sqls.LIMIT_10000, Config.project, 1);
-        /*
         Map<String, String[]> SQLWithAllCol = Sqls.getDataRangeSQL(Sqls.selectAllColClause, whereClause);
         Map<String, String[]> SQLWithOneCol = Sqls.getDataRangeSQL(Sqls.selectOneColClause, whereClause);
         Map<String, String[]> SQLWithTenCol = Sqls.getDataRangeSQL(Sqls.selectTenColClause, whereClause);
@@ -48,7 +26,6 @@ public class Benchmark {
         testQueryLatency(SQLWithAllCol, Sqls.LIMIT_10000, Config.project, 1);
         testQueryLatency(SQLWithTenCol, Sqls.LIMIT_10000, Config.project, 1);
         testQueryLatency(SQLWithTwentyCol, Sqls.LIMIT_10000, Config.project, 1);
-        */
     }
 
     public static void warmUP(Map<String, String[]> sqlMap, String project) throws IOException {
@@ -89,49 +66,6 @@ public class Benchmark {
         }
     }
 
-    public static void testQueryThroughput(int threadNum, final String[] sqls, final String project)
-            throws IOException, ExecutionException, InterruptedException {
-        logger.info("Start to test query throughput, thread num is: {}", threadNum);
-        ExecutorService executorService = Executors.newFixedThreadPool(threadNum);
-        List<FutureTask<Double>> tasks = new ArrayList<>();
-        final AtomicLong totalQueryCount = new AtomicLong(0);
-        final AtomicLong totalQueryTime = new AtomicLong(0);
-
-        for (int i = 0; i < threadNum; i++) {
-            FutureTask<Double> task = new FutureTask<>(new Callable<Double>() {
-                @Override
-                public Double call() throws Exception {
-                    long startTime = System.currentTimeMillis();
-                    RestClient client = new RestClient();
-                    client.disableCache();
-                    List<SqlResponse> responses = new ArrayList<>();
-                    while (true) {
-                        for (String sql : sqls) {
-                            SqlResponse resp = client.query(sql, project);
-                            responses.add(resp);
-                            totalQueryCount.incrementAndGet();
-                            totalQueryTime.addAndGet(resp.getSqlDuration());
-                            if (isTimeout(startTime, Config.TEST_DURATION)) {
-                                return avgQueryDuration(responses);
-                            }
-                        }
-                    }
-                }
-            });
-            tasks.add(task);
-            executorService.submit(task);
-        }
-        executorService.shutdown();
-        double tps = 0.0;
-        for (FutureTask<Double> task : tasks) {
-            double singleRoundQueryLatency = task.get();
-            logger.info("Query Throughput Test, one thread's query latency is: {}", singleRoundQueryLatency);
-        }
-        System.out.println(tps);
-        logger.info("Test Query Throughput end, the QPS is: {}",
-                (totalQueryCount.get() * 1.0 / (totalQueryTime.get() * 1.0 / 1000)) * threadNum);
-    }
-
     private static double avgQueryDuration(List<SqlResponse> responses) {
         double total = 0.0;
         for (SqlResponse response : responses) {
@@ -146,9 +80,5 @@ public class Benchmark {
             total += response.getSize();
         }
         return total / responses.size();
-    }
-
-    private static boolean isTimeout(long startTime, long duration) {
-        return (System.currentTimeMillis() - startTime) > duration;
     }
 }
